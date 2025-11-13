@@ -5,8 +5,18 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // It's NEVER hardcoded here for security!
 const API_KEY = process.env.GEMINI_API_KEY;
 
+// --- !!! NEW CHANGE STARTS HERE !!! ---
+// Define a base URL for the Gemini API to explicitly target a working endpoint.
+// This often resolves '404 Not Found' issues for model access with AI Studio keys.
+const BASE_URL = 'https://generativelanguage.googleapis.com'; // Standard Gemini API endpoint
+// --- !!! NEW CHANGE ENDS HERE !!! ---
+
+
 // Initialize the Gemini AI with your key
-const genAI = new GoogleGenerativeAI(API_KEY);
+// --- !!! MODIFIED LINE HERE !!! ---
+const genAI = new GoogleGenerativeAI(API_KEY, { baseUrl: BASE_URL });
+// --- !!! MODIFIED LINE HERE !!! ---
+
 
 // This is the function that Vercel will run when your webpage requests it
 export default async function handler(req, res) {
@@ -23,7 +33,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'Prompt is required.' });
     }
 
-    // Tell it to use the 'gemini-pro' model (a powerful text model)
+    // Use 'gemini-pro' for text-only content.
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
     // Send the prompt to Gemini and wait for the result
