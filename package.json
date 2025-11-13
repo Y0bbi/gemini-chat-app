@@ -1,0 +1,12 @@
+{
+  "name": "simple-gemini-vercel",
+  "version": "1.0.0",
+  "description": "A simple Gemini AI chat on Vercel",
+  "main": "api/gemini.js",
+  "scripts": {
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.1.2"
+  }
+}
